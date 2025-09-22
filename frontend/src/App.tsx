@@ -1,31 +1,10 @@
-import { useState } from 'react';
+// src/App.tsx
+import React, { useState } from 'react';
 import Profile from './components/Profile';
-import Register from './components/Register';
-import Login from './components/Login';
+import Auth from './components/Auth'; // Import the new Auth component
 
-type Props = {
-    onAuthSuccess: (token: string) => void;
-}
-
-const Auth = ({ onAuthSuccess }: Props) => {
-    const [authView, setAuthView] = useState<'login' | 'register'>('register');
-
-    return (
-        <div>
-            <nav>
-                <button onClick={() => setAuthView('register')}>Register</button>
-                <button onClick={() => setAuthView('login')}>Login</button>
-            </nav>
-            {authView === 'register' ? (
-                <Register onRegisterSuccess={() => setAuthView('login')} />
-            ) : (
-                <Login onLoginSuccess={onAuthSuccess} />
-            )}
-        </div>
-    );
-};
-
-function App() {
+const App: React.FC = () => {
+    // Read token from localStorage on initial render
     const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
     const handleAuthSuccess = (newToken: string) => {
@@ -39,17 +18,27 @@ function App() {
     };
 
     return (
-        <div className="container">
+        <div className="min-h-screen">
+            {/* Conditional rendering based on the token state */}
             {!token ? (
                 <Auth onAuthSuccess={handleAuthSuccess} />
             ) : (
-                <>
-                    <button onClick={handleLogout}>Logout</button>
-                    <Profile />
-                </>
+                <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col">
+                    <header className="flex justify-end p-4 bg-white dark:bg-gray-800 shadow">
+                        <button
+                            onClick={handleLogout}
+                            className="px-4 py-2 font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
+                        >
+                            Logout
+                        </button>
+                    </header>
+                    <main className="flex-grow">
+                        <Profile />
+                    </main>
+                </div>
             )}
         </div>
     );
-}
+};
 
 export default App;

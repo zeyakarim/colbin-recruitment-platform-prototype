@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetcher } from ".";
 
 export const useProfileData = () => {
-    return useQuery({
+    return useQuery<any>({
         queryKey: ["getMe"],
         queryFn: async () => {
             const res = await fetcher(`/user/profile`, "get");

@@ -29,13 +29,7 @@ export const useSignupMutation = () => {
     return useMutation({
         mutationFn: async (payload: any) => {
             const res = await fetcher('/auth/register', 'POST', payload);
-            
-            // Check for the success message to ensure the operation worked
-            if (!res || typeof res.message !== 'string') {
-                throw new Error('API response did not contain a success message.');
-            }
-            
-            return res.message;
+            return res;
         },
         onSuccess: () => {
             console.log("✅ Signup successful");
