@@ -8,7 +8,7 @@ dotenv.config({ path: ".env" });
 
 const origins = JSON.parse(
     process.env.origins ||
-    '["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "https://colbin-recruitment-platform-prototy.vercel.app/"]'
+    '["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "https://colbin-recruitment-platform-prototy.vercel.app/", "https://colbin-recruitment-platform-prototype.onrender.com/"]'
 );
 
 const app = express();
